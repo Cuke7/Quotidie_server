@@ -49,8 +49,7 @@ app.get("/", async (req, res) => {
     let users = snapshot.val()
     for (let index = 0; index < Object.values(users).length; index++) {
       const user = Object.values(users)[index];
-      // console.log(user.key)
-      sendFCMMessage(user.key, notification).catch(err => console.error(err))
+      if (user.isSubscribed) sendFCMMessage(user.key, notification).catch(err => console.error(err))
     }
   });
   res.send(JSON.stringify({ title }))
